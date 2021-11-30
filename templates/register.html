@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+{% block title %} Registration {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="modal-dialog text-center">
+        <div class="col-md-12 blue-section-margins">
+            <div class="modal-content">
+                <div class="col-12 esportslogo">
+                    <img src="static/imgs/esportslogo.jpg">
+                </div>
+                <form class="col-12" action="{{ url_for('register') }}" method="post">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-warning alert-dismissable" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="close" style="width: 10%; margin: 0;>
+                        <span aria-hidden=" true
+                        ">&times;</span>
+                        </button>
+                        <p class="text-left">{{ msg }}</p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <h4><u>Please Register Below:</u></h4><br>
+                    <div class="form-group">
+                        <i class="fas fa-user icons fa-2x"></i><input type="text" class="form-control" id="firstname"
+                                                                      name="firstname"
+                                                                      placeholder="Enter First Name Here">
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-user icons fa-2x"></i><input type="text" class="form-control" id="lastname"
+                                                                      name="lastname"
+                                                                      placeholder="Enter Last Name Here">
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-gamepad icons fa-2x"></i><input type="text" class="form-control" id="username"
+                                                                        name="username"
+                                                                        placeholder="Enter User Name Here*">
+                        <small>*Username must be atleast 4 characters long and consist of only letters, numbers and
+                            underscores.</small>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-envelope icons fa-2x"></i><input type="text" class="form-control" id="email"
+                                                                          name="email"
+                                                                          placeholder="Enter Email Address Here">
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock icons fa-2x"></i><input type="password" class="form-control" id="password"
+                                                                      name="password"
+                                                                      placeholder="Enter Password Here**">
+                        <small>**Passwords must be 8 characters long, contain 1 letter, 1 number and 1 special
+                            character.</small>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock icons fa-2x"></i><input type="password" class="form-control"
+                                                                      id="cpassword" name="cpassword"
+                                                                      placeholder="Confirm your Password">
+                    </div>
+                    <div class="form-group">
+                        <a href="{{ url_for('login') }}" class="link-pink"><p>Already/Just Registered?</p></a>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

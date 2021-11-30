@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% include 'nav.html' %}
+
+{% block title %} Stockton Esports Statistical Software {% endblock %}
+
+{% block body %}
+
+
+<!--Start of container-->
+<div class="container modal-content" id="inhouse-container">
+
+    <!--Start of lobby toggle-->
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <form method="get" action="/inhouse_lobby/lobby_1">
+                <button type="submit" class="btn btn-white"><i class="fas fa-sign-in-alt"></i>
+                    {% if on_lobby_1 %}<strong>{% endif %}Inhouse Lobby 1{% if on_lobby_1 %}</strong>{% endif %}</button>
+            </form>
+        </div>
+        <div class="col-md-6 text-center">
+            <form method="get" action="/inhouse_lobby/lobby_2">
+                <button type="submit" class="btn btn-white"><i class="fas fa-sign-in-alt"></i>
+                    {% if on_lobby_2 %}<strong>{% endif %}Inhouse Lobby 2{% if on_lobby_2 %}</strong>{% endif %}</button>
+            </form>
+        </div>
+    </div>
+    <!--End of lobby toggle-->
+
+    <!--Start of statistic dismissible popup box-->
+    {% if player_stats %}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-warning alert-dismissable" role="alert">
+                <button type="button" class="close msg-box" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="row">
+                    <div class="col-sm-6 text-right">
+                        <div class="row">
+                            <div class="col-12">
+                                Summoner Name:
+                            </div>
+                            <div class="col-12">
+                                Tier:
+                            </div>
+                            <div class="col-12">
+                                Rank:
+                            </div>
+                            <div class="col-12">
+                                LP:
+                            </div>
+                            <div class="col-12">
+                                Wins:
+                            </div>
+                            <div class="col-12">
+                                Losses:
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        {% for stat in player_stats %}
+                        <div class="row">
+                            <div class="col-12">
+                                {{ stat }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        {% if emblem %}
+                        <img src="{{ url_for('static', filename=emblem) }}" class="emblem">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    {% endif %}
+    <!--End of statistic dismissible popup box-->
+
+    <!--Start of refresh button-->
+    <div class="row">
+        <div class="col-12 text-center">
+                {% if on_lobby_1 %}
+            <form method="get" action="/inhouse_lobby/lobby_1">
+                {% endif %}
+                {% if on_lobby_2 %}
+            <form method="get" action="/inhouse_lobby/lobby_2">
+                {% endif %}
+                <button type="submit" class="btn btn-outline-dark bg-light inhouse-button-margins"><h5
+                    class="text-dark"><i class="fas fa-sync"></i> Refresh</h5></button>
+            </form>
+        </div>
+    </div>
+    <!--End of refresh button-->
+
+    <!--Start of main content div-->
+    <div class="row">
+
+        <!--Start of Red Team Column-->
+        <div class="col-md-3">
+
+        <!--Start of Red Team Header-->
+            <div class="row">
+                <div class="col-12 bg-danger text-center">
+                    <h1 class="text-light">Red Team</h1>
+                </div>
+            </div>
+        <!--End of Red Team Header-->
+
+            <!--Start of red team 1-->
+            {% if red_team_1 %}
+            {% for player in red_team_1 %}
+            <div class="row player-row bg-danger">
+
+                <!--Start of Player Column-->
+                <div class="col-12 text-center">
+                    <form method="get" action="{{ url_for('stat_lookup', player=player, lobby='lobbysetup1') }}">
+                        <button type="submit" class="btn btn-pink">
+                            <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                        </button>
+                    </form>
+                </div>
+                <!--End of Player Column-->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of red team 1-->
+
+            <!--Start of red team 2-->
+            {% if red_team_2 %}
+            {% for player in red_team_2 %}
+            <div class="row player-row bg-danger">
+
+                <!--Start of Player Column-->
+                <div class="col-12 text-center">
+                    <form method="get" action="{{ url_for('stat_lookup', player=player, lobby='lobbysetup2') }}">
+                        <button type="submit" class="btn btn-pink">
+                            <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                        </button>
+                    </form>
+                </div>
+                <!--End of Player Column-->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of red team 2-->
+
+        </div>
+        <!--End of Red Team Column-->
+
+        <!--Start of Lobby Column-->
+        <div class="col-md-6">
+
+            <!--Start of Lobby Header-->
+            <div class="row">
+                <div class="col-12 bg-dark text-center">
+                    <h1 class="text-light">
+                        {% if on_lobby_1 %}Inhouse Lobby 1{% endif %}
+                        {% if on_lobby_2 %}Inhouse Lobby 2{% endif %}
+                    </h1>
+                </div>
+            </div>
+            <!--End of Lobby Header-->
+
+            <!--Start of Lobby 1-->
+            {% if lobby_1 %}
+            {% for player in lobby_1 %}
+            <div class="row player-row bg-dark">
+
+                <!--Start of Player Column-->
+                <div class="col-12 text-center">
+                    <form method="get" action="{{ url_for('stat_lookup', player=player, lobby='lobbysetup1') }}">
+                        <button type="submit" class="btn btn-pink">
+                            <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                        </button>
+                    </form>
+                </div>
+                <!--End of Player Column-->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of Lobby 1-->
+
+            <!--Start of Lobby 2-->
+            {% if lobby_2 %}
+            {% for player in lobby_2 %}
+            <div class="row player-row bg-dark">
+
+                <!--Start of Player Column-->
+                <div class="col-12 text-center">
+                    <form method="get" action="{{ url_for('stat_lookup', player=player, lobby='lobbysetup2') }}">
+                        <button type="submit" class="btn btn-pink">
+                            <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                        </button>
+                    </form>
+                </div>
+                <!--End of Player Column-->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of Lobby 2-->
+
+        </div>
+        <!--End of Lobby Column-->
+
+
+        <!-- Start of Blue Team Column -->
+        <div class="col-md-3">
+
+            <!-- Start of Blue Team Header -->
+            <div class="row">
+                <div class="col-12 bg-primary text-center">
+                    <h1 class="text-light">Blue Team</h1>
+                </div>
+            </div>
+            <!-- End of Blue Team Header -->
+
+            <!--Start of blue team 1-->
+            {% if blue_team_1 %}
+            {% for player in blue_team_1 %}
+
+            <div class="row player-row bg-primary">
+                <!-- Start of Player Column -->
+                    <div class="col-12 text-center">
+                        <form method="get" action="{{ url_for('stat_lookup', player=player, lobby='lobbysetup1') }}">
+                            <button type="submit" class="btn btn-pink">
+                                <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                            </button>
+                        </form>
+                    </div>
+                <!-- End of Player Column -->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of blue team 1-->
+
+            <!--Start of blue team 2-->
+            {% if blue_team_2 %}
+            {% for player in blue_team_2 %}
+
+            <div class="row player-row bg-primary">
+                <!-- Start of Player Column -->
+                    <div class="col-12 text-center">
+                        <form method="get" action="{{ url_for('stat_lookup', player=player, lobby='lobbysetup2') }}">
+                            <button type="submit" class="btn btn-pink">
+                                <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                            </button>
+                        </form>
+                    </div>
+                <!-- End of Player Column -->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of blue team 2-->
+
+        </div>
+         <!-- End of Blue Team Column -->
+    </div>
+    <!--End of main content div-->
+</div>
+<!--End of container div-->
+{% endblock %}

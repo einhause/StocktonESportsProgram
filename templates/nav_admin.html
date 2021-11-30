@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Stockton Esports Statistical Software {% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-md nav-bg-image">
+    <a class="navbar-brand" href="{{ url_for('lobbysetup') }}">
+        <img src="{{ url_for('static', filename='imgs/esports_logo.png') }}" class="nav-logo">
+    </a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link text-light text-center" href="{{ url_for('lobbysetup') }}">Lobby Setup</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light text-center" href="{{ url_for('inhousesetup', lobby='lobby_1') }}">Inhouse Setup</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light text-center" href="{{ url_for('leaderboard', view='admin_view') }}">Leaderboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light text-center" href="{{ url_for('logout') }}">Logout</a>
+        </li>
+    </ul>
+</nav>
+
+{% endblock %}

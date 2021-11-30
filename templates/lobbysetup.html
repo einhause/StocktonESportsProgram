@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% include 'nav_admin.html' %}
+
+{% block title %} Stockton Esports Statistical Software {% endblock %}
+
+{% block body %}
+
+
+<!--Start of page toggle -->
+<div class="container pink-bg">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <form method="get" action="/lobbysetup">
+                <button type="submit" class="btn btn-outline-light bg-dark wide-btn"><h5
+                    class="text-light"><u> Lobby Setup </u></h5></button>
+            </form>
+        </div>
+        <div class="col-md-6 text-center">
+            <form method="get" action="/inhousesetup/lobby_1">
+                <button type="submit" class="btn btn-outline-light bg-dark wide-btn"><h5
+                    class="text-light"> Inhouse Setup </h5></button>
+            </form>
+        </div>
+    </div>
+</div>
+    <!--End of page toggle -->
+
+<!--Start of container-->
+<div class="container modal-content" id="inhouse-container">
+
+    <div class="row">
+        <div class="col-md-12 heading-text"><br>
+            <h1 class="text-dark"><strong>Welcome, {{ account['username'] }}</strong></h1><br><br>
+        </div>
+    </div>
+
+    <!--Start of dismissible message box-->
+    {% if msg %}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="alert alert-warning alert-dismissable" role="alert">
+                <button type="button" class="close msg-box" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="text-left">{{ msg }}</p>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    {% endif %}
+    <!--End of dismissible message box-->
+
+    <!--Start of refresh button-->
+    <div class="row">
+        <div class="col-12 text-center">
+            <form method="get" action="/lobbysetup">
+                <button type="submit" class="btn btn-outline-dark bg-light inhouse-button-margins"><h5
+                    class="text-dark"><i class="fas fa-sync"></i> Refresh</h5></button>
+            </form>
+        </div>
+    </div>
+    <!--End of refresh button-->
+
+        <!--Start of main content div-->
+    <div class="row">
+
+        <!--Start of Lobby 1 Column-->
+        <div class="col-md-3">
+
+        <!--Start of Lobby 1 Header-->
+            <div class="row">
+                <div class="col-12 pink-bg text-center">
+                    <h1 class="text-light">Lobby 1</h1>
+                </div>
+            </div>
+        <!--End of Lobby 1 Header-->
+
+            <!--Start Lobby 1 Editable content-->
+            {% if lobby_1 %}
+            {% for player in lobby_1 %}
+            <div class="row player-row pink-bg">
+
+                <!--Start of Player Column-->
+                <div class="col-md-9 text-center">
+                    <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                </div>
+                <!--End of Player Column-->
+
+                <!--Start of Remove from Lobby Button-->
+                <div class="col-md-3">
+                    <form method="post" action="/remove_from_lobby/{{ player }}/lobby_1">
+                        <button type="submit" class="btn remove-lobby-btn btn-blue right-float-btn"><h5
+                                class="text-light"><i class="fas fa-times-circle"></i></h5></button>
+                    </form>
+                </div>
+                <!--End of Remove from Lobby Button-->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of Lobby 1 Editable content-->
+
+        </div>
+        <!--End of Lobby 1 Column-->
+
+        <!--Start of Queue Column-->
+        <div class="col-md-6">
+
+            <!--Start of Queue Header-->
+            <div class="row">
+                <div class="col-12 bg-dark text-center">
+                    <h1 class="text-light">Queue</h1>
+                </div>
+            </div>
+            <!--End of Queue Header-->
+
+            <!--Start of Queue Editable content-->
+            {% if queue %}
+            {% for player in queue %}
+            <div class="row player-row bg-dark">
+
+                <!--Start of Move to Lobby 1 Button-->
+                <div class="col-md-3">
+                    <form method="post" action="/move_to_lobby/{{ player }}/lobby_1">
+                        <button type="submit" class="btn btn-small pink-bg left-float-btn"><i class="fas fa-arrow-left text-light"></i></button>
+                    </form>
+                </div>
+                <!--End of Move to Lobby 1 Button-->
+
+                <!--Start of Player Column-->
+                <div class="col-md-6 text-center">
+                    <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                </div>
+                <!--End of Player Column-->
+
+                <!--Start of Move to Lobby 2 Button-->
+                <div class="col-md-3">
+                    <form method="post" action="/move_to_lobby/{{ player }}/lobby_2">
+                        <button type="submit" class="btn btn-small pink-bg right-float-btn"><i class="fas fa-arrow-right text-light"></i></button>
+                    </form>
+                </div>
+                <!--End of Move to Lobby 2 Button-->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!--End of Queue Editable content-->
+
+        </div>
+        <!--End of Queue Column-->
+
+
+        <!-- Start of Lobby 2 Column -->
+        <div class="col-md-3">
+
+            <!-- Start of Lobby 2 Header -->
+            <div class="row">
+                <div class="col-12 pink-bg text-center">
+                    <h1 class="text-light">Lobby 2</h1>
+                </div>
+            </div>
+            <!-- End of Lobby 2 Header -->
+
+            <!-- Start of Lobby 2 Editable Content -->
+            {% if lobby_2 %}
+            {% for player in lobby_2 %}
+            <div class="row player-row pink-bg">
+
+                <!-- Start of Lobby 2 Remove Button -->
+                <div class="col-md-3">
+                    <form method="post" action="/remove_from_lobby/{{ player }}/lobby_2">
+                        <button type="submit" class="btn remove-lobby-btn btn-blue left-float-btn"><h5
+                                class="text-light"><i class="fas fa-times-circle"></i></h5></button>
+                    </form>
+                </div>
+                <!-- End of Lobby 2 Remove Button -->
+
+                <!-- Start of Player Column -->
+                <div class="col-md-9 text-center">
+                    <h7 class="text-light">{{ player['summonerName'] }}</h7>
+                </div>
+                <!-- End of Player Column -->
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!-- End of Lobby 2 Editable Content -->
+
+
+        </div>
+         <!-- End of Lobby 2 Column -->
+    </div>
+    <!--End of main content div-->
+</div>
+<!--End of container div-->
+{% endblock %}

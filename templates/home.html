@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% include 'nav.html' %}
+
+{% block title %} Stockton Esports Statistical Software {% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <!-- Start of Jumbotron -->
+    <div class="jumbotron" id="home-jumbo">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-left">
+                <div class="modal-content text-center">
+                    <h1 class="text-light">Stockton Esports</h1>
+                    <p class="text-dark">Riot Server Inhouse Team Balancing Assistant</p>
+                    <form method="get" action="/inhouse_lobby/lobby_1">
+                    <button type="submit" class="btn btn-white"><i class="fas fa-sign-in-alt"></i>
+                        Inhouse Lobbies</button>
+                    `</form>
+                </div>
+                <br>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    <!-- End of Jumbotron -->
+
+    <!-- Start of Modal content -->
+    <div class="modal-content" id="qa-border">
+        <div class="row">
+            <!-- Start of Q & A Column -->
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="col-12 qa-margins">
+                        <h2 class="text-light">Q: <u>What are Inhouses?</u></h2>
+                        <p class="text-dark"><br>
+                        A: Inhouses are custom 5 v 5 games in League of Legends, an online Multiplayer Online Battle Arena
+                        (MOBA), that are hosted in the Stockton Esports Riot Server. Inhouses are  for the purpose of
+                        community building and fun with a slight competitive edge. Anyone who is level 30 and owns 20
+                        champions is eligible to join. A detailed ruleset for inhouses can be found below in the
+                        <a href="{{ url_for('static', filename='documents/Inhouse Rulebook.pdf') }}" target="_blank" class="link-pink"><em>Inhouse Rulebook</em></a>.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 qa-margins">
+                        <h2 class="text-light">Q: <u>How does the Stockton Esports Riot Inhouse Balancing Assistant work?</u></h2>
+                        <p class="text-dark"><br>
+                        A: The program works by first entering players who would like to play into a queue. To join the
+                        queue, you can click on “Join Queue” to the right under the text that says "Inhouse Queue".
+                        Leadership staff are then able to add potential players from the queue into inhouse lobbies to
+                        play in the next inhouse game. Leadership staff can allocate two captains and place players
+                        onto different teams based on the captain’s choice. The captain can run a statistics check on
+                        potential players in the inhouse lobby by clicking on their summoner name.
+                        The program also keeps track of wins and losses of each player as well as their
+                        competitive rank.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center qa-margins">
+                        <a href="{{ url_for('static', filename='documents/Inhouse Rulebook.pdf') }}" target="_blank"><h1 class="link-pink"><u>Inhouse Rulebook</u></h1></a>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Q & A Column-->
+
+            <!-- Start of Queue Column -->
+            <div class="col-md-5">
+
+                <div class="row">
+                    <div class="col-12 qa-margins
+\">
+                        <h1 class="text-light text-center"><u>Inhouse Queue</u></h1>
+                    </div>
+                </div>
+
+                <!--Start of Queue dismissible message box-->
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-warning alert-dismissable" role="alert">
+                        <button type="button" class="close msg-box" data-dismiss="alert" aria-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p class="text-left">{{ msg }}</p>
+                    </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <!--End of Queue dismissible message box-->
+
+
+                <!--Start of Join Queue Button-->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <form method="post" action="/join_queue/{{ session['summonername'] }}">
+                            <button type="submit" class="btn btn-white"><i class="fas fa-sign-in-alt"></i>
+                                Join Queue</button>
+                        </form>
+                    </div>
+                </div><br>
+
+                <!--End of Join Queue Button-->
+
+                <!--Start of refresh button-->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <form method="get" action="/home">
+                        <button type="submit" class="btn btn-outline-dark bg-light inhouse-button-margins"><h5
+                            class="text-dark"><i class="fas fa-sync"></i> Refresh</h5></button>
+                        </form>
+                    </div>
+                </div>
+    <!--End of refresh button-->
+
+                <!-- Start of Queue -->
+                {% if queue|length > 0 %}
+                {% for player in queue %}
+                <div class="row">
+                    <div class="col-md-2 black-bg queue-border-left">
+                         <p class="text-light">
+                           {{ loop.index0+1 }}
+                        </p>
+                    </div>
+                    <div class="col-md-4 black-bg queue-border-left">
+                        <p class="text-light">
+                            {{ player['tier'] }} {{ player['rank'] }}
+                        </p>
+                    </div>
+                    <div class="col-md-6 black-bg queue-border-right">
+                        <p class="text-light"><strong>{{ player['summonerName'] }}</strong></p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+
+                <!-- End of Queue -->
+            </div>
+            <!-- End of Queue -->
+            <br>
+        </div>
+    </div>
+    <!-- End of Modal content -->
+
+</div>
+
+{% endblock %}

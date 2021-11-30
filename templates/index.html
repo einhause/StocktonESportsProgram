@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+{% block title %} Stockton Esports Statistical Software {% endblock %}
+{% block body %}
+<div class="container">
+    <div class="modal-dialog text-center">
+        <div class="col-md-12 blue-section-margins">
+            <div class="modal-content">
+                <div class="col-12 esportslogo">
+                    <img src="static/imgs/esportslogo.jpg">
+                </div>
+                <form class="col-12" action="{{ url_for('login') }}" method="post">
+                    <h4><u>Welcome, Please enter a valid Summoner Name*</u></h4><br>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-warning alert-dismissable" role="alert">
+                        <button type="button" class="close msg-box" data-dismiss="alert" aria-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p class="text-left">{{ msg }}</p>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <div class="form-group">
+                        <i class="fas fa-user icons fa-2x"></i><input type="text" name="summonername"
+                                                                      class="form-control" id="summonername"
+                                                                      placeholder="Enter Summoner Name Here" required>
+                    </div>
+                    <div class="form-group">
+                        <p class="text-center"><a href="{{ url_for('adminlogin') }}" class="link-pink">Administrator
+                            Login</a></p>
+                    </div>
+                    <button type="submit" class="btn btn-white"><i class="fas fa-sign-in-alt"></i> Get More Info</button>
+                    <br>
+                    <h7>*If you are not registered, please speak with an admin.</h7>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

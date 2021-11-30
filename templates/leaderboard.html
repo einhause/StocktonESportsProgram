@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% if view == 'user_view' %}
+{% include 'nav.html' %}
+{% endif %}
+
+{% if view == 'admin_view' %}
+{% include 'nav_admin.html' %}
+{% endif %}
+
+
+{% block title %} Stockton Esports Statistical Software {% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <!-- Start of Jumbotron -->
+    <div class="jumbotron" id="home-jumbo">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 text-left">
+                <div class="modal-content text-center">
+                    <h1 class="text-light">Leaderboard</h1>
+                </div>
+                <br>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    <!-- End of Jumbotron -->
+
+    <!-- Start of Leaderboard -->
+    <div class="modal-content" id="qa-border">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Position</th>
+                    <th scope="col">Tier</th>
+                    <th scope="col">Summoner</th>
+                    <th scope="col">Inhouse Points</th>
+                </tr>
+             </thead>
+             <tbody>
+        {% if all_players %}
+        {% for player in all_players %}
+        {% if loop.index0+1 == 1 %}
+            <tr class="bg-gold">
+        {% endif %}
+        {% if loop.index0+1 == 2 %}
+            <tr class="bg-silver">
+        {% endif %}
+        {% if loop.index0+1 == 3 %}
+            <tr class="bg-bronze">
+        {% endif %}
+        {% if loop.index0+1 > 3 %}
+            <tr>
+        {% endif %}
+                <th scope="row" class="text-center">{{ loop.index0+1 }}</th>
+                {% if emblems %}
+                <th><img src="{{ url_for('static', filename=emblems[player['summonerName']]) }}" class="emblem_leaderboard"></th>
+                {% endif %}
+                <th>{{ player['summonerName'] }}</th>
+                <th>{{ inhouse_points[player['summonerName']] }}</th>
+            </tr>
+        {% endfor %}
+        {% endif %}
+        </table>
+    </div>
+    <!-- End of Leaderboard -->
+</div>
+
+
+{% endblock %}
