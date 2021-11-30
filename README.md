@@ -1,4 +1,4 @@
-### DEMO: youtube.com/watch?v=kIkWpbm34bc&feature=youtu.be
+### DEMO: https://youtube.com/watch?v=kIkWpbm34bc&feature=youtu.be
 
 # Stockton ESports Team Balancing Assistant
 
